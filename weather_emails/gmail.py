@@ -10,7 +10,7 @@ from email.message import EmailMessage
 
 EMAIL_CONTENT = 'Today in Warsaw is ... C degrees.'
 EMAIL_RECIPIENT = 'jkstycz91@gmail.com'
-SCOPES = ['https://www.googleapis.com/auth/gmail.send']
+SCOPES = ('https://www.googleapis.com/auth/gmail.send',)
 SUBJECT = 'Tempreture today'
 TOKEN_FILE_NAME = 'token.json'
 CREDENTIALS_FILE_NAME = 'credentials.json'
@@ -32,6 +32,8 @@ def get_credentials():
         
         with open(TOKEN_FILE_NAME, 'w') as token:
             token.write(creds.to_json())
+           # print("hello")
+
 
     return creds
 
