@@ -23,7 +23,7 @@ def get_user(conn, cur, user_name):
 
 
 def delete_user(conn, cur, user_name):
-    querry = f'DELETE * FROM name WHERE name = {user_name}'
+    querry = f'DELETE FROM name WHERE name = {user_name}'
     execute_query(conn, querry, cur)
 
 
