@@ -25,9 +25,12 @@ def main():
         database.delete_user(conn, cursor, user_name)
     elif option == "create":
         user_name = input("Enter user name: ")
-        
+        city = input("Enter city name: ")
+        weather_fields = input("Enter weather component: ")
         database.post_user(conn, cursor, user_name, city, weather_fields)
     elif option == "update":
+        city_name = input("Enter city name: ")
+        current_city_name = input("Enter new city name: ")
         database.patch_user(conn, cursor, city_name, current_city_name)
 
     

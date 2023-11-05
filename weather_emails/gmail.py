@@ -9,10 +9,10 @@ from googleapiclient.errors import HttpError
 from email.message import EmailMessage
 
 
-SCOPES = ('https://www.googleapis.com/auth/gmail.send',)
-
-TOKEN_FILE_NAME = 'token.json'
 CREDENTIALS_FILE_NAME = 'credentials.json'
+SCOPES = ('https://www.googleapis.com/auth/gmail.send',)
+TOKEN_FILE_NAME = 'token.json'
+
 
 
 def get_credentials():

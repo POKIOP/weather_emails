@@ -18,8 +18,8 @@ def get_city_pressure(city_name):
     return current_pressure
 
 if __name__ == "__main__":
-    current_tempreture = get_city_temperature("warsaw")
-    current_pressure = get_city_pressure("warsaw")
+    current_tempreture = get_city_temperature("tunis")
+    current_pressure = get_city_pressure("tunis")
     print(current_tempreture, current_pressure)
 
 

@@ -35,6 +35,5 @@ def create_table_if_not_exist(conn, cur):
     cur.execute(""" SELECT count(name) FROM sqlite_master WHERE type="table" AND name="users" """)
     if cur.fetchone()[0]==1:
         print('Table already exists.')
-    
     else:
         execute_query(conn, CREATE_TABLE_QUERRY, cur)
