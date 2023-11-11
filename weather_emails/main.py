@@ -9,9 +9,9 @@ import ui
 
 
 DATABASE_FILE = "weather.sqlite"
-EMAIL_RECIPIENT = 'jkstycz91@gmail.com'
+# EMAIL_RECIPIENT = 'jkstycz91@gmail.com'
 
-SUBJECT = 'Temperature today'
+SUBJECT = 'Weather forecast for you'
 
 
 
@@ -21,27 +21,32 @@ def main():
     database.create_table_if_not_exist(conn, cursor)
     option = ui.get_user_option()
     if option == "delete":
+        print("DELETE option selected")
         user_name = input("Enter email adress: ")
         database.delete_user(conn, cursor, user_name)
     elif option == "create":
+        print("CREATE option selected")
         user_name = input("Enter user name: ")
         city = input("Enter city name: ")
         weather_fields = input("Enter weather component: ")
         email = input("Enter email adress: ")
         database.post_user(conn, cursor, user_name, city, weather_fields, email)
     elif option == "update":
+        print("UPDATE option selected")
         city_name = input("Enter new city name: ")
         current_city_name = input("Enter city name: ")
         database.patch_user(conn, cursor, city_name, current_city_name)
     elif option == "send_email":
+        print("SEND_EMAIL option selected")
         users = database.get_users(conn, cursor)
         for user in users:
             tempereture = weather.get_city_temperature(user[1])
+            email = (user[3])
             
         # pressure = weather.get_city_pressure(user[1])
             creds = gmail.get_credentials()
             email_content= f'Good morning {user[0]},\n\nToday at {user[1]} is {tempereture} C degrees.'
-            message_id = gmail.send_email(creds, email_content, EMAIL_RECIPIENT, SUBJECT)
+            message_id = gmail.send_email(creds, email_content, email, SUBJECT)
             
             print(message_id)
 
