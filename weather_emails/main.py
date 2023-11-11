@@ -21,7 +21,7 @@ def main():
     database.create_table_if_not_exist(conn, cursor)
     option = ui.get_user_option()
     if option == "delete":
-        user_name = input("Enter user name: ")
+        user_name = input("Enter email adress: ")
         database.delete_user(conn, cursor, user_name)
     elif option == "create":
         user_name = input("Enter user name: ")
