@@ -40,12 +40,18 @@ def main():
         print("SEND_EMAIL option selected")
         users = database.get_users(conn, cursor)
         for user in users:
-            tempereture = weather.get_city_temperature(user[1])
+            city= (user[1])
+            tempreture = weather.get_city_temperature(city)
+            pressure = weather.get_city_pressure(city)
+            weather_component = (user[2])
             email = (user[3])
             
-        # pressure = weather.get_city_pressure(user[1])
+    
             creds = gmail.get_credentials()
-            email_content= f'Good morning {user[0]},\n\nToday at {user[1]} is {tempereture} C degrees.'
+            if weather_component == "tempreture":
+                email_content= f'Good morning {user[0]},\n\nToday at {city} is {tempreture} C degrees.'
+            elif weather_component == "pressure":
+                email_content= f'Good morning {user[0]},\n\nToday at {city} is {pressure} hPa.'        
             message_id = gmail.send_email(creds, email_content, email, SUBJECT)
             
             print(message_id)
