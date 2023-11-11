@@ -1,7 +1,3 @@
-#polaczyc plik weather i gmail zeby zbieralo informacje i wysylalo emaila
-# wiecej parametrow pogodowych - zmiany w email contetnt
-# https://builtin.com/data-science/sqlite
-
 from weather_emails import gmail, weather
 import sqlite3
 import database
@@ -9,10 +5,7 @@ import ui
 
 
 DATABASE_FILE = "weather.sqlite"
-# EMAIL_RECIPIENT = 'jkstycz91@gmail.com'
-
 SUBJECT = 'Weather forecast for you'
-
 
 
 def main():
@@ -45,8 +38,6 @@ def main():
             pressure = weather.get_city_pressure(city)
             weather_component = (user[2])
             email = (user[3])
-            
-    
             creds = gmail.get_credentials()
             if weather_component == "tempreture":
                 email_content= f'Good morning {user[0]},\n\nToday at {city} is {tempreture} C degrees.'
