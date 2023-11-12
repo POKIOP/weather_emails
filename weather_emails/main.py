@@ -36,17 +36,18 @@ def main():
             city= (user[1])
             tempreture = weather.get_city_temperature(city)
             pressure = weather.get_city_pressure(city)
+            humidity = weather.get_city_humidity(city)
             weather_component = (user[2])
             email = (user[3])
             creds = gmail.get_credentials()
             if weather_component == "tempreture":
                 email_content= f'Good morning {user[0]},\n\nToday at {city} is {tempreture} C degrees.'
             elif weather_component == "pressure":
-                email_content= f'Good morning {user[0]},\n\nToday at {city} is {pressure} hPa.'        
+                email_content= f'Good morning {user[0]},\n\nToday at {city} is {pressure} hPa.'  
+            elif weather_component == "humidity":
+                email_content= f'Good morning {user[0]},\n\nToday at {city} is {humidity} % of humidity.'           
             message_id = gmail.send_email(creds, email_content, email, SUBJECT)
-            
             print(message_id)
-
 
 
 
