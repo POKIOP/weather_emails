@@ -43,13 +43,11 @@ def send_email(creds, email_content, email_recipient, subject):
         create_message = {
             'raw': encoded_message
         }
-        send_message = (service.users().messages().send
-                        (userId="me", body=create_message).execute())
-        print(f'Message Id: {send_message["id"]}')
+        send_message = service.users().messages().send(userId="me", body=create_message).execute()
+        return send_message
     except HttpError as error:
-        print(f'An error occurred: {error}')
-        send_message = None
-    return send_message
+        print(f'Message not send: {error}')
+    
 
 
 def main():

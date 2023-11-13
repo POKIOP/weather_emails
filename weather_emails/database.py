@@ -32,12 +32,13 @@ def get_users(conn, cur):
 
 def delete_user(conn, cur, email):
     querry = f'DELETE FROM users WHERE email = "{email}"'
-    execute_query(conn, querry, cur)
+    user = execute_query(conn, querry, cur)
+    return user
 
 
-def patch_user(conn, cur, city_name, current_city_name, weather_component, current_weather_component):
-    querry = f"""UPDATE users SET city = "{city_name}" WHERE city = "{current_city_name}" """
-    querry = f"""UPDATE users SET weather_fields = "{weather_component}" WHERE weather_fields = "{current_weather_component}" """
+def patch_user(conn, cur, field_to_change, new_value, user_name):
+    querry = f"""UPDATE users SET "{field_to_change}" = "{new_value}" WHERE name = "{user_name}" """
+    # querry = f"""UPDATE users SET weather_fields = "{weather_component}" WHERE weather_fields = "{current_weather_component}" """
     execute_query(conn, querry, cur)
 
 def create_table_if_not_exist(conn, cur):

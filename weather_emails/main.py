@@ -16,38 +16,50 @@ def main():
     if option == "delete":
         print("DELETE option selected")
         user_name = input("Enter email adress: ")
-        database.delete_user(conn, cursor, user_name)
+        user = database.delete_user(conn, cursor, user_name)
+        if not user:
+            print("No user in database")
+            return
     elif option == "create":
         print("CREATE option selected")
         user_name = input("Enter user name: ")
         city = input("Enter city name: ")
-        weather_fields = input("Enter weather component: ")
+        weather_fields = input("Enter weather components: ")
         email = input("Enter email adress: ")
-        database.post_user(conn, cursor, user_name, city, weather_fields, email)
+        user = database.post_user(conn, cursor, user_name, city, weather_fields, email)
+        print(user)
     elif option == "update":
-        print("UPDATE option selected")
-        city_name = input("Enter new city name: ")
-        current_city_name = input("Enter city name: ")
-        database.patch_user(conn, cursor, city_name, current_city_name)
+        print("UPDATE option selected") # TODO
+        user_name = input("Enter user name: ")
+        field_to_change = input("Enter field to change: ")
+        new_value = input("Enter new value: ")
+
+        database.patch_user(conn, cursor, field_to_change, new_value, user_name)
     elif option == "send_email":
         print("SEND_EMAIL option selected")
         users = database.get_users(conn, cursor)
-        for user in users:
-            city= (user[1])
-            tempreture = weather.get_city_temperature(city)
-            pressure = weather.get_city_pressure(city)
-            humidity = weather.get_city_humidity(city)
-            weather_component = (user[2])
-            email = (user[3])
+        if not users:
+            print("No users in database")
+            return
+        for user in users: 
+            temperature = weather.get_city_temperature(user[1])
+            pressure = weather.get_city_pressure(user[1])
+            humidity = weather.get_city_humidity(user[1])
+            weather_component = user[2]
             creds = gmail.get_credentials()
-            if weather_component == "tempreture":
-                email_content= f'Good morning {user[0]},\n\nToday at {city} is {tempreture} C degrees.'
+            if weather_component == "temperature":
+                email_content = f'Good morning {user[0]},\n\nToday at {user[1]} is {temperature} C degrees.'
             elif weather_component == "pressure":
-                email_content= f'Good morning {user[0]},\n\nToday at {city} is {pressure} hPa.'  
+                email_content = f'Good morning {user[0]},\n\nToday at {user[1]} is {pressure} hPa.'  
             elif weather_component == "humidity":
-                email_content= f'Good morning {user[0]},\n\nToday at {city} is {humidity} % of humidity.'           
-            message_id = gmail.send_email(creds, email_content, email, SUBJECT)
-            print(message_id)
+                email_content = f'Good morning {user[0]},\n\nToday at {user[1]} is {humidity} % of humidity.'           
+            else:
+                email_content = f'Good morning. Dear {user[0]} you not chosen correct weather component '
+            message_id = gmail.send_email(creds, email_content, user[3], SUBJECT)
+            if message_id is None:
+                print("Message not send")
+            else:
+                print("Message send")
 
 
 
