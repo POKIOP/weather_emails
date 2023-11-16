@@ -54,7 +54,7 @@ def main():
             elif weather_component == "humidity":
                 email_content = f'Good morning {user[0]},\n\nToday at {user[1]} is {humidity} % of humidity.'           
             else:
-                email_content = f'Good morning. Dear {user[0]} you not chosen correct weather component '
+                email_content = f'Good morning. \n\nDear {user[0]} you not chosen correct weather component.'
             message_id = gmail.send_email(creds, email_content, user[3], SUBJECT)
             if message_id is None:
                 print("Message not send")
