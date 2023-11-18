@@ -24,7 +24,7 @@ def main():
         print("CREATE option selected")
         user_name = input("Enter user name: ")
         city = input("Enter city name: ")
-        weather_fields = input("Enter weather components: ")
+        weather_fields = input("Enter weather component: ")
         email = input("Enter email adress: ")
         user = database.post_user(conn, cursor, user_name, city, weather_fields, email)
         print(user)
