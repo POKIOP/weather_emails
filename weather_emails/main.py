@@ -46,28 +46,28 @@ def main():
             temperature = weather.get_city_temperature(user[1])
             pressure = weather.get_city_pressure(user[1])
             humidity = weather.get_city_humidity(user[1])
-            weather_component1 = user[2]
-            weather_component2 = user[3]
             text1 = f'temperature is: {temperature} C degrees'
             text2 = f'pressure is: {pressure} hPa'
             text3 = f'humidity is: {humidity} %.'
             creds = gmail.get_credentials()
-            components = [weather_component1, weather_component2]
-            print(components)
+            weather_components = [user[2], user[3]]
+            print(weather_components)
 
-            for comp in components:
-                if comp == "temperature":
-                    email_content = f'Good morning {user[0]},\n\nToday at {user[1]} {text1}'
-                    if comp == "pressure":
-                        email_content = f'Good morning {user[0]},\n\nToday at {user[1]} {text2}'
+            # for comp in weather_components:
+            if "temperature" and "pressure" in weather_components:
+                email_content = f'Good morning {user[0]},\n\nToday at {user[1]} {text1}, {text2}'
+            # if "pressure" in weather_components:
+            #     email_content = f'Good morning {user[0]},\n\nToday at {user[1]} {text2}'
+            # elif comp == "humidity":
+            #     email_content = f'Good morning {user[0]},\n\nToday at {user[1]} {text3}'    
             # if weather_component1 or weather_component2 == "temperature":
             #     email_content = f'Good morning {user[0]},\n\nToday at {user[1]} is {text1}'
             #     if weather_component1 or weather_component2 == "pressure":
             #         email_content = f'Good morning {user[0]},\n\nToday at {user[1]} {text2}'
             # elif weather_component1 == "humidity":
             #     email_content = f'Good morning {user[0]},\n\nToday at {user[1]} {text3}'           
-            # else:
-            #     email_content = f'Good morning. \n\nDear {user[0]} you not chosen correct weather component.'
+            else:
+                email_content = f'Good morning. \n\nDear {user[0]} you not chosen correct weather component.'
             message_id = gmail.send_email(creds, email_content, user[4], SUBJECT)
             if message_id is None:
                 print("Message not send")
