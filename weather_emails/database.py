@@ -1,6 +1,6 @@
 import sqlite3
 
-CREATE_TABLE_QUERRY = "CREATE TABLE users (name VARCHAR, city VARCHAR, weather_field1 VARCHAR, weather_field2 VARCHAR, email VARCHAR PRIMARY KEY)"
+CREATE_TABLE_QUERRY = "CREATE TABLE users (name VARCHAR, city VARCHAR, weather_fields VARCHAR, email VARCHAR PRIMARY KEY)"
 
 
 def execute_query(conn, querry, cur):
@@ -14,8 +14,8 @@ def connect_to_database():
     cur = conn.cursor()
     conn.close()
 
-def post_user(conn, cur, name, city, weather_field1, weather_field2, email):
-    querry = f'INSERT INTO users(name, city, weather_field1, weather_field2, email) values ("{name}", "{city}", "{weather_field1}", "{weather_field2}", "{email}")'
+def post_user(conn, cur, name, city, weather_fields, email):
+    querry = f'INSERT INTO users(name, city, weather_fields, email) values ("{name}", "{city}", "{weather_fields}", "{email}")'
     execute_query(conn, querry, cur)
     
 
