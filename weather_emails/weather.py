@@ -3,6 +3,9 @@ import json
 from string import Template
 
 API_KEY = "2369b101e6f002368134406dd2d008e3"
+HUMIDITY_MESSAGE = Template('humidity is: $humidity %.')
+PRESSURE_MESSAGE = Template('pressure is: $pressure hPa')
+TEMPERATURE_MESSAGE = Template('temperature is: $temperature C degrees')
 URL = "http://api.openweathermap.org/data/2.5/weather?"
 
 
@@ -27,10 +30,8 @@ def get_city_humidity(city_name):
 
 def prepare_message(fields, city_name):
     separated_fields = [field.strip() for field in fields.split(",")]
-    temperature_message = Template('temperature is: $temperature C degrees')
-    pressure_message = Template('pressure is: $pressure hPa')
-    humidity_message = Template('humidity is: $humidity %.')
-    message_content = {"temperature": temperature_message.substitute(temperature = get_city_temperature(city_name)), "pressure": pressure_message.substitute(pressure = get_city_pressure(city_name)), "humidity": humidity_message.substitute(humidity = get_city_humidity(city_name))}
+    
+    message_content = {"temperature": TEMPERATURE_MESSAGE.substitute(temperature = get_city_temperature(city_name)), "pressure": PRESSURE_MESSAGE.substitute(pressure = get_city_pressure(city_name)), "humidity": HUMIDITY_MESSAGE.substitute(humidity = get_city_humidity(city_name))}
     
     message = [] #3 linijki ponizej zmienic na jedna tak jak separated_fields
     for field in separated_fields:

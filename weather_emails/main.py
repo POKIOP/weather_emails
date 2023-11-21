@@ -33,7 +33,6 @@ def main():
         user_name = input("Enter user name: ")
         field_to_change = input("Enter field to change: ")
         new_value = input("Enter new value: ")
-
         database.patch_user(conn, cursor, field_to_change, new_value, user_name)
     elif option == "send_email":
         print("SEND_EMAIL option selected")
@@ -43,7 +42,9 @@ def main():
             return
         creds = gmail.get_credentials()
         for user in users: 
-                      
+
+    # @dataclass jak zastosowac do grupowania na : imie , miasto ????                  
+            
             message = weather.prepare_message(user[2], user[1])
             if not message:                   
                 message = f'Good morning. \n\nDear {user[0]} you did not choose correct weather component.'
