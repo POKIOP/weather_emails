@@ -1,7 +1,18 @@
 from weather_emails import gmail, weather
+from dataclasses import dataclass
 import sqlite3
 import database
 import ui
+
+# https://realpython.com/python-data-classes/
+
+@dataclass
+class User:
+    name: str
+    city: str
+    weather_fields: str
+    email: str
+
 
 
 DATABASE_FILE = "weather.sqlite"
