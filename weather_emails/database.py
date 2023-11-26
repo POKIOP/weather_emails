@@ -38,7 +38,6 @@ def delete_user(conn, cur, email):
 
 def patch_user(conn, cur, field_to_change, new_value, user_name):
     querry = f"""UPDATE users SET "{field_to_change}" = "{new_value}" WHERE name = "{user_name}" """
-    # querry = f"""UPDATE users SET weather_fields = "{weather_component}" WHERE weather_fields = "{current_weather_component}" """
     execute_query(conn, querry, cur)
 
 def create_table_if_not_exist(conn, cur):

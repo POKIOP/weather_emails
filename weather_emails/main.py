@@ -45,7 +45,7 @@ def main():
 
     # @dataclass jak zastosowac do grupowania na : imie , miasto ????                  
             
-            message = weather.prepare_message(user[2], user[1])
+            message = weather.prepare_message(user[0], user[2], user[1])
             if not message:                   
                 message = f'Good morning. \n\nDear {user[0]} you did not choose correct weather component.'
 

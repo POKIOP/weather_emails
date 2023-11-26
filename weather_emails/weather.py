@@ -28,18 +28,19 @@ def get_city_humidity(city_name):
     current_humidity = response["main"]["humidity"]
     return current_humidity
 
-def prepare_message(fields, city_name):
+def prepare_message(user_name, fields, city_name):
     separated_fields = [field.strip() for field in fields.split(",")]
     
-    message_content = {"temperature": TEMPERATURE_MESSAGE.substitute(temperature = get_city_temperature(city_name)), "pressure": PRESSURE_MESSAGE.substitute(pressure = get_city_pressure(city_name)), "humidity": HUMIDITY_MESSAGE.substitute(humidity = get_city_humidity(city_name))}
+    message_content = {"user_name": user_name, "temperature": TEMPERATURE_MESSAGE.substitute(temperature = get_city_temperature(city_name)), "pressure": PRESSURE_MESSAGE.substitute(pressure = get_city_pressure(city_name)), "humidity": HUMIDITY_MESSAGE.substitute(humidity = get_city_humidity(city_name))}
     
     message = [] #3 linijki ponizej zmienic na jedna tak jak separated_fields
+    
     for field in separated_fields:
         message.append(message_content.get(field))
     if not message:
         return None
     
-    return "Hello " + ", ".join(message)
+    return "Good morning " + user_name + " " "today at " + city_name + " " + ", ".join(message)
 
 if __name__ == "__main__":
     current_tempreture = get_city_temperature("tunis")
