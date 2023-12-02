@@ -1,5 +1,6 @@
 import sqlite3
 
+
 CREATE_TABLE_QUERRY = "CREATE TABLE users (name VARCHAR, city VARCHAR, weather_fields VARCHAR, email VARCHAR PRIMARY KEY)"
 
 
@@ -14,27 +15,26 @@ def connect_to_database():
     cur = conn.cursor()
     conn.close()
 
-def post_user(conn, cur, name, city, weather_fields, email):
-    querry = f'INSERT INTO users(name, city, weather_fields, email) values ("{name}", "{city}", "{weather_fields}", "{email}")'
+def post_user(conn, cur, user):
+    querry = f'INSERT INTO users(name, city, weather_fields, email) values ("{user.name}", "{user.city}", "{user.weather_fields}", "{user.email}")'
     execute_query(conn, querry, cur)
     
 
-def get_user(conn, cur, email):
-    querry = f'SELECT * FROM users WHERE email = "{email}"'
+def get_user(conn, cur, user):
+    querry = f'SELECT * FROM users WHERE email = "{user.email}"'
     user = execute_query(conn, querry, cur)
     return user[0]
 
 def get_users(conn, cur):
     querry = f'SELECT * FROM users'
-    users = execute_query(conn, querry, cur)
-    return users
-
-
-def delete_user(conn, cur, email):
-    querry = f'DELETE FROM users WHERE email = "{email}"'
     user = execute_query(conn, querry, cur)
     return user
 
+
+def delete_user(conn, cur, user):
+    querry = f'DELETE FROM users WHERE email = "{user.email}"'
+    execute_query(conn, querry, cur)
+    
 
 def patch_user(conn, cur, field_to_change, new_value, user_name):
     querry = f"""UPDATE users SET "{field_to_change}" = "{new_value}" WHERE name = "{user_name}" """

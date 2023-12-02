@@ -1,18 +1,9 @@
 from weather_emails import gmail, weather
-from dataclasses import dataclass
+
 import sqlite3
 import database
 import ui
-
-# https://realpython.com/python-data-classes/
-
-@dataclass
-class User:
-    name: str
-    city: str
-    weather_fields: str
-    email: str
-
+from models import User
 
 
 DATABASE_FILE = "weather.sqlite"
@@ -26,19 +17,19 @@ def main():
     option = ui.get_user_option()
     if option == "delete":
         print("DELETE option selected")
-        user_name = input("Enter email adress: ")
-        user = database.delete_user(conn, cursor, user_name)
-        if not user:
-            print("No user in database")
-            return
+        email = input("Enter email adress: ")
+        user = User(email = email)
+        database.delete_user(conn, cursor, user)
+
     elif option == "create":
         print("CREATE option selected")
-        user_name = input("Enter user name: ")
+        name = input("Enter user name: ")
         city = input("Enter city name: ")
         weather_fields = input("Enter weather component: ")
         email = input("Enter email adress: ")
-        user = database.post_user(conn, cursor, user_name, city, weather_fields, email)
-        print(user)
+        user = User(name = name, city = city, weather_fields=weather_fields, email=email)
+        database.post_user(conn, cursor, user)
+        
     elif option == "update":
         print("UPDATE option selected") # TODO
         user_name = input("Enter user name: ")
@@ -53,10 +44,8 @@ def main():
             return
         creds = gmail.get_credentials()
         for user in users: 
-
-    # @dataclass jak zastosowac do grupowania na : imie , miasto ????                  
+            message = weather.prepare_message(user)
             
-            message = weather.prepare_message(user[0], user[2], user[1])
             if not message:                   
                 message = f'Good morning. \n\nDear {user[0]} you did not choose correct weather component.'
 
