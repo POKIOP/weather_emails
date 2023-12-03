@@ -19,7 +19,6 @@ def post_user(conn, cur, user):
     querry = f'INSERT INTO users(name, city, weather_fields, email) values ("{user.name}", "{user.city}", "{user.weather_fields}", "{user.email}")'
     execute_query(conn, querry, cur)
     
-
 def get_user(conn, cur, user):
     querry = f'SELECT * FROM users WHERE email = "{user.email}"'
     user = execute_query(conn, querry, cur)
@@ -30,12 +29,10 @@ def get_users(conn, cur):
     user = execute_query(conn, querry, cur)
     return user
 
-
 def delete_user(conn, cur, user):
     querry = f'DELETE FROM users WHERE email = "{user.email}"'
     execute_query(conn, querry, cur)
     
-
 def patch_user(conn, cur, field_to_change, new_value, user_name):
     querry = f"""UPDATE users SET "{field_to_change}" = "{new_value}" WHERE name = "{user_name}" """
     execute_query(conn, querry, cur)
