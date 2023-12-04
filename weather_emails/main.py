@@ -5,7 +5,6 @@ import database
 import ui
 from models import User
 
-
 DATABASE_FILE = "weather.sqlite"
 SUBJECT = 'Weather forecast for you'
 
