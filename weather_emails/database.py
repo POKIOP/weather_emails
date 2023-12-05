@@ -22,7 +22,7 @@ def post_user(conn, cur, user):
 def get_user(conn, cur, user):
     querry = f'SELECT * FROM users WHERE email = "{user.email}"'
     user = execute_query(conn, querry, cur)
-    return user[0]
+    return user
 
 def get_users(conn, cur):
     querry = f'SELECT * FROM users'
