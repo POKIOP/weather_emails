@@ -1,5 +1,5 @@
 import sqlite3
-
+from models import User
 
 CREATE_TABLE_QUERRY = "CREATE TABLE users (name VARCHAR, city VARCHAR, weather_fields VARCHAR, email VARCHAR PRIMARY KEY)"
 
@@ -21,20 +21,20 @@ def post_user(conn, cur, user):
     
 def get_user(conn, cur, user):
     querry = f'SELECT * FROM users WHERE email = "{user.email}"'
-    user = execute_query(conn, querry, cur)
-    return user
+    user = execute_query(conn, querry, cur)[0]
+    return User(name=user[0], city=user[1], weather_fields=user[2], email=user[3])
 
-def get_users(conn, cur):
-    querry = f'SELECT * FROM users'
-    user = execute_query(conn, querry, cur)
-    return user
+def get_all_users(conn, cur):
+    querry = 'SELECT * FROM users'
+    users = execute_query(conn, querry, cur)
+    return [User(name=user[0], city=user[1], weather_fields=user[2], email=user[3]) for user in users]
 
 def delete_user(conn, cur, user):
     querry = f'DELETE FROM users WHERE email = "{user.email}"'
     execute_query(conn, querry, cur)
     
-def patch_user(conn, cur, field_to_change, new_value, user_name):
-    querry = f"""UPDATE users SET "{field_to_change}" = "{new_value}" WHERE name = "{user_name}" """
+def patch_user(conn, cur, field_to_change, new_value, user):
+    querry = f"""UPDATE users SET "{field_to_change}" = "{new_value}" WHERE name = "{user.name}" """
     execute_query(conn, querry, cur)
 
 def create_table_if_not_exist(conn, cur):

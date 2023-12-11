@@ -33,7 +33,7 @@ def update(conn, cursor):
 
 def send_email(conn, cursor):
     print("SEND_EMAIL option selected")
-    users = database.get_users(conn, cursor)
+    users = database.get_all_users(conn, cursor)
     if not users:
         print("No users in database")
         return
